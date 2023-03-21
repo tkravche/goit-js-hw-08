@@ -7,23 +7,23 @@ formEL.addEventListener('input', throttle(onFormInput, 500));
 formEL.addEventListener('submit', onFormSubmit);
 
 function onFormInput(e) {
-  let savedMessages = localStorage.getItem(LOCALSTORAGE_KEY);
-  savedMessages = savedMessages ? JSON.parse(savedMessages) : {};
-  savedMessages[e.target.name] = e.target.value;
-  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(savedMessages));
+  let savedData = localStorage.getItem(LOCALSTORAGE_KEY);
+  savedData = savedData ? JSON.parse(savedData) : {};
+  savedData[e.target.name] = e.target.value;
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(savedData));
 }
 
-function populateInputs() {
-  let savedMessages = localStorage.getItem(LOCALSTORAGE_KEY);
-  if (savedMessages) {
-    savedMessages = JSON.parse(savedMessages);
-    Object.entries(savedMessages).forEach(([name, value]) => {
-      savedMessages[name] = value;
+function restoreData() {
+  let savedData = localStorage.getItem(LOCALSTORAGE_KEY);
+  if (savedData) {
+    savedData = JSON.parse(savedData);
+    Object.entries(savedData).forEach(([name, value]) => {
+      savedData[name] = value;
       formEL.elements[name].value = value;
     });
   }
 }
-populateInputs();
+restoreData();
 
 function onFormSubmit(e) {
   e.preventDefault();
